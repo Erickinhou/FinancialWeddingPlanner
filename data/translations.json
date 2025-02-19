@@ -1,0 +1,26 @@
+{
+  "en": {
+    "total_initial": "Total Initial Contributions",
+    "total_monthly": "Total Monthly Contributions",
+    "total_expenses": "Total Expenses",
+    "months_until": "Months Until Deadline",
+    "projected_savings": "Projected Savings",
+    "budget_sufficient": "Is the Budget Sufficient?",
+    "missing_budget": "Missing Budget",
+    "profit": "Profit",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "pt-br": {
+    "total_initial": "Total de Contribuições Iniciais",
+    "total_monthly": "Total de Contribuições Mensais",
+    "total_expenses": "Total de Despesas",
+    "months_until": "Meses Até o Prazo Final",
+    "projected_savings": "Economia Projetada",
+    "budget_sufficient": "O Orçamento é Suficiente?",
+    "missing_budget": "Orçamento Faltante",
+    "profit": "Lucro",
+    "yes": "Sim",
+    "no": "Não"
+  }
+}

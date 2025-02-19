@@ -1,0 +1,73 @@
+{
+  "contributors": [
+    {
+      "person_name": "John Doe",
+      "contributions": [
+        {
+          "name": "Contribution 1",
+          "contribution_value": {
+            "initial": 100,
+            "monthly": {
+              "value": 100,
+              "interest_rate": 0.01
+            }
+          }
+        },
+        {
+          "name": "Contribution 2",
+          "contribution_value": {
+            "initial": 200,
+            "monthly": {
+              "value": 200,
+              "interest_rate": 0.01
+            }
+          }
+        }
+      ]
+    },
+    {
+      "person_name": "Jane",
+      "contributions": [
+        {
+          "name": "Contribution 1",
+          "contribution_value": {
+            "initial": 100,
+            "monthly": {
+              "value": 100,
+              "interest_rate": 0.01
+            }
+          }
+        },
+        {
+          "name": "Contribution 2",
+          "contribution_value": {
+            "initial": 200,
+            "monthly": {
+              "value": 200,
+              "interest_rate": 0.01
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "expenses": [
+    {
+      "name": "Expense 1",
+      "value": 100
+    },
+    {
+      "name": "Expense 2",
+      "value": 200
+    }
+  ],
+  "date_limit": {
+    "day": 1,
+    "month": 4,
+    "year": 2026
+  },
+  "environment": {
+    "language": "pt-br",
+    "currency": "BRL"
+  }
+}

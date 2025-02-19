@@ -1,0 +1,14 @@
+# Ignore IDE configuration (for JetBrains IDEs like PyCharm)
+.idea/
+
+# Ignore Python cache directories
+__pycache__/
+**/__pycache__/  # Ignore all __pycache__ folders recursively
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Python environments
+.DS_Store
