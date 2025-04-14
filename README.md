@@ -1,29 +1,62 @@
-# Wedding Budget Calculator
+# Wedding Budget Calculator API
 
-This project is a **wedding budget calculator** designed to help couples plan their finances for their wedding. The program calculates whether the projected savings from the contributors (e.g., the couple) will be sufficient to cover the planned expenses by a given deadline. If the budget is insufficient, the program will display the missing amount. If there is a surplus, it will show the extra profit.
+This project is a **wedding budget calculator API** designed to help couples plan their finances for their wedding. The API calculates whether the projected savings from the contributors (e.g., the couple) will be sufficient to cover the planned expenses by a given deadline. If the budget is insufficient, the API will return the missing amount. If there is a surplus, it will show the extra profit.
 
 ## How It Works
-1. The program reads a **JSON file (`input.json`)** that contains:
-    - Contributors and their financial contributions.
-    - Expected wedding expenses.
-    - A deadline for savings.
-    - Environment settings (language and currency).
+
+1. The API receives a request with the following data:
+    - Contributors and their financial contributions
+    - Expected wedding expenses
+    - A deadline for savings
+    - Environment settings (language and currency)
 
 2. Using the provided financial data, it:
-    - Computes the **total initial contributions**.
-    - Computes the **monthly contributions** (including interest).
-    - Estimates the **total projected savings** by the deadline.
-    - Compares savings against **total expenses**.
-    - Displays either:
-        - ✅ **Budget is sufficient**: Shows the remaining profit.
-        - ❌ **Budget is insufficient**: Shows how much more is needed.
+    - Computes the **total initial contributions**
+    - Computes the **monthly contributions** (including interest)
+    - Estimates the **total projected savings** by the deadline
+    - Compares savings against **total expenses**
+    - Returns either:
+        - ✅ **Budget is sufficient**: Shows the remaining profit
+        - ❌ **Budget is insufficient**: Shows how much more is needed
 
----
+## Installation
 
-## Editing the Budget Data (`input.json`)
-To customize the budget, open and edit the `input.json` file in the `data/` folder.
+1. Clone the repository
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# or
+.\venv\Scripts\activate  # Windows
+```
 
-### **JSON Structure & Explanation**
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Running the API
+
+To start the server, run:
+```bash
+uvicorn src.main:app --reload
+```
+
+The API will be available at `http://localhost:8000`
+
+## API Documentation
+
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+## Endpoints
+
+### Budget Calculation
+#### POST /api/v1/budget/calculate
+
+Calculates the wedding budget based on provided data.
+
+**Example Request:**
 ```json
 {
   "contributors": [
@@ -31,11 +64,11 @@ To customize the budget, open and edit the `input.json` file in the `data/` fold
       "person_name": "John Doe",
       "contributions": [
         {
-          "name": "Contribution 1",
+          "name": "Initial Contribution",
           "contribution_value": {
-            "initial": 100,
+            "initial": 5000.0,
             "monthly": {
-              "value": 100,
+              "value": 1000.0,
               "interest_rate": 0.01
             }
           }
@@ -45,14 +78,14 @@ To customize the budget, open and edit the `input.json` file in the `data/` fold
   ],
   "expenses": [
     {
-      "name": "Expense 1",
-      "value": 100
+      "name": "Catering",
+      "value": 15000.0
     }
   ],
   "date_limit": {
     "day": 1,
-    "month": 4,
-    "year": 2026
+    "month": 12,
+    "year": 2024
   },
   "environment": {
     "language": "en",
@@ -83,66 +116,79 @@ To customize the budget, open and edit the `input.json` file in the `data/` fold
     - **`language`**: The program's language (`"en"` for English, `"pt-br"` for Portuguese).
     - **`currency`**: The currency format (`"USD"` for dollars, `"BRL"` for reais).
 
----
-
-## How to Use
-### **1. Install Dependencies**
-Ensure you have Python installed. Then, install `pydantic` for data validation:
-```sh
-pip install pydantic
+**Response:**
+```json
+{
+  "total_initial": 5000.0,
+  "total_monthly": 1000.0,
+  "total_expenses": 15000.0,
+  "months_until": 8,
+  "projected_savings": 13310.0,
+  "budget_sufficient": false,
+  "missing_budget": 1690.0,
+  "profit": null,
+  "currency": "USD"
+}
 ```
 
-### **2. Edit the Budget (`input.json`)**
-Modify the `data/input.json` file according to your needs.
+### Guest List Management
+#### POST /api/v1/guest-list/manage
 
-### **3. Run the Program**
-Execute the script:
-```sh
-python main.py
+Manages the wedding guest list, including RSVPs and meal preferences.
+
+**Example Request:**
+```json
+{
+  "guests": [
+    {
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "is_attending": true,
+      "meal_preference": "vegetarian",
+      "plus_one": true
+    }
+  ]
+}
 ```
 
-### **4. Interpret the Output**
-The program will display financial summaries, including whether the budget is sufficient and how much extra or missing money there is.
-
----
-
-## Example Outputs
-### ✅ **Budget is Sufficient**
-```
-Total Initial Contributions: $ 5000.00
-Total Monthly Contributions: $ 1200.00
-Total Expenses: $ 15000.00
-Months Until Deadline: 12
-Projected Savings: $ 18000.50
-Is the Budget Sufficient? Yes
-Profit: $ 3000.50
+**Response:**
+```json
+{
+  "total_guests": 1,
+  "attending_guests": 1,
+  "vegetarian_meals": 1,
+  "plus_ones": 1
+}
 ```
 
-### ❌ **Budget is Insufficient**
-```
-Total Initial Contributions: R$ 3000.00
-Total Monthly Contributions: R$ 800.00
-Total Expenses: R$ 20000.00
-Months Until Deadline: 12
-Projected Savings: R$ 15000.00
-Is the Budget Sufficient? No
-Missing Budget: R$ 5000.00
-```
+## Project Structure
 
----
+```
+.
+├── src/
+│   ├── model/
+│   │   ├── field/
+│   │   │   ├── contributor/
+│   │   │   ├── date_limit_model.py
+│   │   │   ├── enviroment_model.py
+│   │   │   └── expense_model.py
+│   │   └── wedding_budget_model.py
+│   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── budget_router.py
+│   │   └── guest_list_router.py
+│   └── main.py
+├── requirements.txt
+└── README.md
+```
 
 ## Notes
-- The program **does not modify `input.json`** automatically.
-- Interest calculations are **compound interest applied monthly**.
-- If `date_limit` is in the past, the program **still calculates projections** but assumes savings stopped.
-- The **environment settings** determine the **language of the messages** and the **currency format** in the output.
-
----
+- The API uses **compound interest applied monthly** for calculations
+- If `date_limit` is in the past, the API still calculates projections but assumes savings stopped
+- The **environment settings** determine the **language of the messages** and the **currency format** in the output
 
 ## Contributing
 Feel free to fork this project and submit pull requests if you want to improve it!
-
----
 
 ## License
 This project is **open-source** under the MIT License.

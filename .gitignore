@@ -12,3 +12,32 @@ __pycache__/
 
 # Ignore Python environments
 .DS_Store
+
+# Ignore data folder
+data/
+
+# Ignore logs folder
+logs/
+
+# Ignore .env file
+.env
+
+# Ignore .env.local file
+.env.local
+
+# Ignore venv folder
+venv/ 
+
+# Ignore .venv folder
+.venv/
+
+# Ignore .pytest_cache folder
+.pytest_cache/
+
+# Ignore .mypy_cache folder
+.mypy_cache/
+
+# Ignore .ruff_cache folder
+.ruff_cache/
+
+
